@@ -69,7 +69,7 @@ Slack Web API（Bot Token）を使用する。ファイル添付に対応。
 
 ## リポジトリ名
 
-`fax-notifier`
+`fax_notifier`
 
 ## 更新手順
 

@@ -1,4 +1,4 @@
-# fax-notifier
+# fax_notifier
 
 複合機で受信したFAXをメール・LINE・Slack・Web UIで通知するシステムです。
 
@@ -18,8 +18,8 @@
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/yourname/fax-notifier.git
-cd fax-notifier
+git clone https://github.com/shinob/fax_notifier.git
+cd fax_notifier
 
 # 仮想環境を作成・有効化
 python3 -m venv venv
@@ -111,8 +111,8 @@ Description=fax-notifier
 After=network.target
 
 [Service]
-WorkingDirectory=/path/to/fax-notifier
-ExecStart=/path/to/fax-notifier/venv/bin/python -m fax_notifier
+WorkingDirectory=/path/to/fax_notifier
+ExecStart=/path/to/fax_notifier/venv/bin/python -m fax_notifier
 Restart=on-failure
 
 [Install]
