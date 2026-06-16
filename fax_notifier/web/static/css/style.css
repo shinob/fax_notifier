@@ -1,0 +1,112 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #2563eb;
+  color: #fff;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.banner.hidden { display: none; }
+.banner button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+h1 { font-size: 20px; margin-bottom: 16px; }
+
+.layout {
+  display: flex;
+  gap: 16px;
+  height: calc(100vh - 100px);
+}
+
+.fax-list {
+  width: 320px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 8px;
+  overflow-y: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.fax-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background .15s;
+}
+.fax-item:hover { background: #f0f4ff; }
+.fax-item.active { background: #dbeafe; }
+.fax-item .filename { font-weight: 600; font-size: 13px; word-break: break-all; }
+.fax-item .received-at { font-size: 11px; color: #666; margin-top: 4px; }
+
+.preview-panel {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.preview-panel iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.preview-panel > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tiff-pages {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #e5e7eb;
+}
+.tiff-page-count {
+  font-size: 12px;
+  color: #666;
+  align-self: flex-end;
+}
+.tiff-pages img {
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  background: #fff;
+}
+
+.placeholder { color: #999; font-size: 14px; }
+.loading { padding: 16px; color: #999; font-size: 14px; }

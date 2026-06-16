@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAX受信一覧</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div id="banner" class="banner hidden">
+    <span id="banner-text"></span>
+    <button onclick="closeBanner()">×</button>
+  </div>
+
+  <div class="container">
+    <h1>FAX受信一覧</h1>
+    <div class="layout">
+      <div class="fax-list" id="fax-list">
+        <p class="loading">読み込み中...</p>
+      </div>
+      <div class="preview-panel" id="preview-panel">
+        <p class="placeholder">FAXを選択するとプレビューが表示されます</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const POLLING_INTERVAL = {{ polling_interval }} * 1000;
+  </script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

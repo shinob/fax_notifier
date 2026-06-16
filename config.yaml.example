@@ -1,0 +1,28 @@
+watch:
+  directory: /path/to/fax/folder
+
+notifications:
+  email:
+    enabled: false
+    smtp_host: smtp.gmail.com
+    smtp_port: 587
+    smtp_user: your@gmail.com
+    smtp_password: your_app_password
+    recipients:
+      - notify@example.com
+
+  line:
+    enabled: false
+    channel_access_token: YOUR_LINE_CHANNEL_ACCESS_TOKEN
+    channel_secret: YOUR_LINE_CHANNEL_SECRET
+    recipients:
+      - U000000000000000000000000000000000  # ユーザーID or グループID
+
+  slack:
+    enabled: false
+    bot_token: xoxb-YOUR_BOT_TOKEN
+    channel: "#general"
+
+web:
+  port: 5000
+  polling_interval: 10  # 秒
