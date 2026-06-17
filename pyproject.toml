@@ -1,3 +1,8 @@
+[project]
+name = "fax_notifier"
+version = "1.0.0"
+description = "FAX受信通知システム"
+
 [tool.black]
 line-length = 88
 target-version = ["py39"]

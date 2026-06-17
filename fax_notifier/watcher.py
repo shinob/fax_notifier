@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import logging
 import os
+import threading
+import time
 from typing import Callable, List, Optional
 
 from watchdog.events import FileCreatedEvent, FileSystemEventHandler
@@ -13,6 +15,41 @@ from .database import insert_fax, mark_notified
 logger = logging.getLogger(__name__)
 
 SUPPORTED_EXTENSIONS = {".pdf", ".tiff", ".tif"}
+
+STABLE_CHECK_INTERVAL = 0.5
+STABLE_REQUIRED_CHECKS = 3
+STABLE_TIMEOUT = 30.0
+
+
+def wait_until_stable(
+    filepath: str,
+    interval: float = STABLE_CHECK_INTERVAL,
+    required_checks: int = STABLE_REQUIRED_CHECKS,
+    timeout: float = STABLE_TIMEOUT,
+) -> bool:
+    """ファイルサイズが一定回数連続で変化しなくなるまで待機する。
+
+    FAX機がファイルを書き込み中に on_created イベントが発火するため、
+    書き込み完了前に添付・送信してしまうのを防ぐ。
+    """
+    deadline = time.monotonic() + timeout
+    last_size = -1
+    stable_count = 0
+    while time.monotonic() < deadline:
+        try:
+            size = os.path.getsize(filepath)
+        except OSError:
+            size = -1
+
+        if size == last_size and size > 0:
+            stable_count += 1
+            if stable_count >= required_checks:
+                return True
+        else:
+            stable_count = 0
+        last_size = size
+        time.sleep(interval)
+    return False
 
 
 class FaxEventHandler(FileSystemEventHandler):
@@ -30,6 +67,15 @@ class FaxEventHandler(FileSystemEventHandler):
         filepath = event.src_path
         ext = os.path.splitext(filepath)[1].lower()
         if ext not in SUPPORTED_EXTENSIONS:
+            return
+
+        threading.Thread(
+            target=self._process_file, args=(filepath,), daemon=True
+        ).start()
+
+    def _process_file(self, filepath: str) -> None:
+        if not wait_until_stable(filepath):
+            logger.warning("ファイルの書き込み完了を確認できませんでした: %s", filepath)
             return
 
         logger.info("新着FAX検知: %s", filepath)
