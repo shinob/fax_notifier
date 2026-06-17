@@ -12,6 +12,7 @@ from .notifiers.base import BaseNotifier
 from .notifiers.email_notifier import EmailNotifier
 from .notifiers.line_notifier import LineNotifier
 from .notifiers.slack_notifier import SlackNotifier
+from .paths import app_data_path
 from .watcher import FaxWatcher
 from .web.app import create_app
 
@@ -20,13 +21,13 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler("fax_notifier.log", encoding="utf-8"),
+        logging.FileHandler(app_data_path("fax_notifier.log"), encoding="utf-8"),
     ],
 )
 logger = logging.getLogger(__name__)
 
-DB_PATH = os.environ.get("FAX_DB_PATH", "fax_notifier.db")
-CONFIG_PATH = os.environ.get("FAX_CONFIG_PATH", "config.yaml")
+DB_PATH = os.environ.get("FAX_DB_PATH", app_data_path("fax_notifier.db"))
+CONFIG_PATH = os.environ.get("FAX_CONFIG_PATH", app_data_path("config.yaml"))
 
 
 def build_notifiers(config) -> List[BaseNotifier]:

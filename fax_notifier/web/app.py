@@ -8,8 +8,13 @@ from flask import Flask, abort, jsonify, render_template, request, send_file
 
 from ..config import AppConfig
 from ..database import get_all_faxes, get_new_faxes
+from ..paths import resource_path
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder=resource_path("web", "templates"),
+    static_folder=resource_path("web", "static"),
+)
 _config: Optional[AppConfig] = None
 _db_path: str = "fax_notifier.db"
 

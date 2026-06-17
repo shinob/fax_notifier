@@ -127,6 +127,31 @@ sudo systemctl enable --now fax-notifier
 
 `~/Library/LaunchAgents/fax-notifier.plist` を作成し、`launchctl load` で登録してください。
 
+## Windows 向け exe を作る
+
+Python 環境を用意せずに使いたい場合は、Windows 上で実行ファイル（`fax_notifier.exe`）をビルドできます。
+
+```bat
+git clone https://github.com/shinob/fax_notifier.git
+cd fax_notifier
+build_windows.bat
+```
+
+`build_windows.bat` は仮想環境の作成・依存パッケージのインストール・PyInstaller によるビルドを自動で行います。成功すると以下が生成されます。
+
+```
+dist\
+├── fax_notifier.exe
+└── config.yaml
+```
+
+1. `dist\config.yaml` を編集する
+2. `dist\fax_notifier.exe` をダブルクリックして起動する
+3. ブラウザで `http://localhost:5000` を開く
+
+> ビルドは Windows 上で実行してください（PyInstaller はクロスコンパイルに対応していません）。
+> Windows Defender などのウイルス対策ソフトが誤検知する場合は、`dist` フォルダを除外設定に追加してください。
+
 ## アップデート
 
 ```bash

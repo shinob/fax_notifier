@@ -7,3 +7,4 @@ slack-sdk>=3.0
 pytest>=7.0
 black
 ruff
+pyinstaller>=6.0
